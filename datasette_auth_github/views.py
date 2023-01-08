@@ -86,6 +86,7 @@ async def github_auth_callback(datasette, request, scope, receive, send):
     actor.update(extras)
 
     # Set a signed cookie and redirect to homepage
-    response = Response.redirect("/")
+    homepage_url = datasette.setting("base_url")
+    response = Response.redirect(homepage_url)
     response.set_cookie("ds_actor", datasette.sign({"a": actor}, "actor"))
     return response
